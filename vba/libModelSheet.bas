@@ -69,35 +69,33 @@ End Sub
 
 
 'Ocultas todas as colunas cujo cabeçalho não tenha cor, de todas as abas não coloridas
-Sub hideEmptyColumns()
-    Dim ws As Worksheet
-    Dim col As Integer
-    Dim startCol As Integer
-    Dim endCol As Integer
+Sub hideAuxColumns()
+    Dim ws As Worksheet, cell As Range
+    Dim startCell As Range, endCell As Range
     Dim hide As Boolean
+
     
     For Each ws In ThisWorkbook.Worksheets
         If ws.Tab.ColorIndex = xlColorIndexNone Then
             hide = False
-            startCol = 0
-            endCol = 0
-            For col = 2 To 16384
-                If ws.Cells(1, col).Interior.ColorIndex = xlColorIndexNone Then
-                    If Not hide Then
-                        startCol = col
-                        hide = True
+            For Each cell In ws.Range("1:1")
+                If (cell.Interior.TintAndShade = 0 And cell.Interior.Color = 16777215) Then 'Testa a cor branca (sem cor)
+                    If (hide) Then
+                        Set endCell = cell
+                    Else
+                        Set startCell = cell
                     End If
+                    hide = True
                 Else
-                    If hide Then
-                        endCol = col - 1
-                        ws.Range(ws.Columns(startCol), ws.Columns(endCol)).EntireColumn.Hidden = True
+                    If (hide) Then
+                        ws.Range(startCell.Address, endCell.Address).EntireColumn.Hidden = True
                         hide = False
                     End If
                 End If
-            Next col
-            If hide Then
-                endCol = 16384
-                ws.Range(ws.Columns(startCol), ws.Columns(endCol)).EntireColumn.Hidden = True
+            Next cell
+            If (hide) Then
+                ws.Range(startCell.Address, endCell.Address).EntireColumn.Hidden = True
+                hide = False
             End If
         End If
     Next ws
