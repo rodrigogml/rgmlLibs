@@ -1,5 +1,5 @@
 Attribute VB_Name = "libModelSheet"
-'libAppWorksheet
+'libAppWorksheet - v1.1 - 21/07/2024
 
 'Esta biblioteca concentra funções e métodos que permitem a construção de uma planilha com controle de versão e importação de dados de uma planilha de versão enterior para uma mais nova.
 'Esta funcionalidade é útil quando há a necessidade de várias instâncias da mesma planilha para cuidar de diferentes assuntos, por exemplo, a mesma planilha para cuidar de obras diferentes ou clientes diferentes. E ao melhorar uma planilha, ela permite que a planilha de outros clientes seja atualizada facilmente.
@@ -84,6 +84,7 @@ Sub hideAuxColumns()
                         Set endCell = cell
                     Else
                         Set startCell = cell
+                        Set endCell = cell
                     End If
                     hide = True
                 Else
@@ -101,3 +102,11 @@ Sub hideAuxColumns()
     Next ws
 End Sub
 
+
+'Esta macro aplica todas os métodos existentes nesse módulo responsáveis para deixar a planilha no modo de visualização para o usuário final
+'Por exemplo: Esconde abas pintadas de preto (auxiliares), copia o menu do modelo para as demais abas, esconde as colunas auxiliares, etc.
+Sub applyUserMode()
+    copyMenuModelToOthers
+    hideAuxColumns
+    hideBlackSheets
+End Sub
