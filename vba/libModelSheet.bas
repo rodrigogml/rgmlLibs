@@ -69,6 +69,7 @@ End Sub
 
 
 'Ocultas todas as colunas cujo cabeçalho não tenha cor, de todas as abas não coloridas
+'!Se obtiver o erro de que não é possível "empurar os objetos para fora da planilha", é provavelm que nas colunas escondidas tenham alguma 'nota'. Ao tentar ocultar todas as colunas a direita a nota não tem para onde ir e "não pode ficar fora da planilha". Exclua a nota.
 Sub hideAuxColumns()
     Dim ws As Worksheet, cell As Range
     Dim startCell As Range, endCell As Range
