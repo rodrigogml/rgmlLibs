@@ -27,8 +27,11 @@ def downloadBcbSgsData(seriesId, startDate, endDate):
         'dataFinal': endDate
     }
 
+    # print(f"Recuperando URL: {url}, Data Inicial: {startDate}, Data Final: {endDate}")
     response = requests.get(url, params=params)
     if response.status_code == 200:
+        # print("Resposta:")
+        # print(response.json())
         return response.json()
     else:
         raise Exception(f"Erro ao baixar os dados da série {seriesId}: HTTP {response.status_code}")
